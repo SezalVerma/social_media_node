@@ -3,10 +3,15 @@
 // module.exports.actionName = function(req,res){}
 
 module.exports.home = function(req,res){
-    return res.end('<h1> Home Page </h1>');
-    // console.log("Home Controller");
+
+    // render ('view from views folder' , {arr of vars})
+    return res.render('home' , {
+        title : "Home"
+    });
 };
 
 module.exports.auth = function(req,res){
-    return res.end('Authorised');
+    return res.render('home', {
+        title : 'authorization'
+    });
 }

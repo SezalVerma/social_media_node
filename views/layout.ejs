@@ -1,0 +1,32 @@
+<!-- this wrapper page name has to be "layout.ejs" only for express to recognise it as basic layout -->
+
+<!-- wrapper for all other views, 
+    contains header & footer  (partials added from other files)
+    & body - variable , from view rendered
+-->
+
+<html>
+    <head>
+        <title>
+            <%= title %>
+        </title>
+        <!-- css file -->
+        <link rel="stylesheet" type="text/css" href="/css/layout.css">
+
+        <!-- place style file for body here -->
+        <%- style %>
+    </head>
+    <body>
+        <!-- header partial , layouts in ejs  has this syntax -->
+        <%- include('_header'); %>
+
+        <!-- variable part from other views -->
+        <%- body %>
+
+        <!-- footer partial -->
+        <%- include('_footer'); %>
+
+        <!-- place script file for body here -->
+        <%- script %>
+    </body>
+</html>
