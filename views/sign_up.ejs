@@ -1,0 +1,50 @@
+<h1> Sign Up </h1>
+
+<form method = "post" action = "/users/create-user" >
+    <table>
+        <tr>
+            <th>
+                <label>
+                    Name
+                </label>
+            </th>
+            <td>
+                <input type="text" placeholder="" name="name" required>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>
+                    E-mail
+                </label>
+            </th>
+            <td>
+                <input type="email" placeholder="abc@gmail.com" name="email" required>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>
+                    Password
+                </label>
+            </th>
+            <td>
+                <input type="password" placeholder="" name="password" required> 
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>
+                    Confirm Password
+                </label>
+            </th>
+            <td>
+                <input type="password" placeholder="" name="confirm_password" required> 
+            </td>
+        </tr>
+        
+
+    </table>
+    <button type="submit"> Submit </button>
+
+</form>

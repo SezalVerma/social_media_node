@@ -1,0 +1,34 @@
+<link rel="stylesheet" type="text/css" href="/css/sign_in.css">
+
+<h1 > Sign In </h1>
+
+<!-- whenever a user sign up , a session is created btw server & browser -->
+<form method = "post" action="/users/create-session" >
+    <table>
+        <tr>
+            <th>
+                <label>
+                    E-mail
+                </label>
+            </th>
+            <td>
+                <input type="email" placeholder="abc@gmail.com" name="email" required>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>
+                     Password
+                </label>
+            </th>
+            <td>
+                <input type="password" placeholder="" name="password" required> 
+            </td>
+        </tr>
+       
+        
+
+    </table>
+    <button type="submit"> Submit </button>
+
+</form>
