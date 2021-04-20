@@ -1,6 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+const session = require('cookie-session'); 
 
 const port = 8000;
 const app = express();
@@ -27,6 +29,23 @@ app.use(express.urlencoded({extended : true}));
 // set up view engine & path of folder to render views from -- for all routes
 app.set('view engine' , 'ejs');
 app.set('views' , './views');
+
+// cookie-session , encrypts the cookie
+// name under which cookie stored , secret - key for encrypt/decrypt , maxAge - in millisec
+app.use(session({
+   name : 'LetsInteract',
+   secret : 'something',
+   saveUninitialised : false,
+   resave : false,
+   cookie: {
+    //    100 min lifetime of cookie, after it destroys
+        maxAge : (1000 * 60 * 100) 
+   }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // for any url ,use routes from 
 app.use('/' , require('./routes/index'));
