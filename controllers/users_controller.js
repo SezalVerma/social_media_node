@@ -4,8 +4,8 @@ const User = require('../models/user');
 // all actions for users view
 
 module.exports.profile = function(req,res){
-    return res.render('users' , {
-        title : 'users'
+    return res.render('profile' , {
+        title : 'User Profile'
     })
 }
 
