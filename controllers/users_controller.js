@@ -56,5 +56,6 @@ module.exports.create_user = function(req,res){
 
 // create new session when user sign in
 module.exports.create_session = function(req,res){
-    // 
+    // after authentication by passport in route , redirects to home page
+    return res.redirect('/');
 }

@@ -25,7 +25,7 @@ passport.use(new LocalStrategy(
                 return done(null, false);
             }
 
-            // if user found
+            // if user found , return user to serialiseUser 
             return done(null,user);
         })
         
@@ -35,7 +35,7 @@ passport.use(new LocalStrategy(
 // serialize which key to send to browser's cookies
 // done -- callback function, can name it anything
 passport.serializeUser(function(user,done){
-    // err->null & send user id into cookies
+    // err->null & send user id in passport.session (created in index.js)
     return done(null, user.id);
 })
 
