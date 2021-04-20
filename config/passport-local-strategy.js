@@ -11,10 +11,10 @@ const User = require('../models/user');
 // authenticate user by email & password
 passport.use(new LocalStrategy(
     // usernameField -- unique field , setting usernameField to take email 
-    {usernameField : email} , function(email,password,done){
+    {usernameField :'email'} , function(email,password,done){
         User.findOne({email : email}, function(err,user){
             if(err){
-                console.log("error while finding user --> Passport-local");
+                console.log("error while finding user --> Passport-local",err);
                 return done(err);
             }
             // ****done takes 2 args(err, any info to send/auth failed)
@@ -36,7 +36,7 @@ passport.use(new LocalStrategy(
 // done -- callback function, can name it anything
 passport.serializeUser(function(user,done){
     // err->null & send user id in passport.session (created in index.js)
-    return done(null, user.id);
+     return done(null, user.id);
 })
 
 // get user from key(user id) in browser cookies

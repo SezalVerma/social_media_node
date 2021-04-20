@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-const session = require('cookie-session'); 
+const session = require('express-session'); 
 
 const port = 8000;
 const app = express();
@@ -30,12 +30,14 @@ app.use(express.urlencoded({extended : true}));
 app.set('view engine' , 'ejs');
 app.set('views' , './views');
 
-// cookie-session , encrypts the cookie
+// express-session , encrypts the cookie
 // name under which cookie stored , secret - key for encrypt/decrypt , maxAge - in millisec
 app.use(session({
-   name : 'LetsInteract',
+   name : 'letsinteract',
    secret : 'something',
-   saveUninitialised : false,
+//    if user is not authenticated , dont initialise a cookie
+   saveUninitialized : false,
+//    if already data saved in cookie, dont resave same 
    resave : false,
    cookie: {
     //    100 min lifetime of cookie, after it destroys

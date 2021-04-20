@@ -34,9 +34,10 @@ module.exports.create_user = function(req,res){
     }
 
     // check if user already exist
-    User.find({email : req.body.email} , function(err,user){
+    User.findOne({email : req.body.email} , function(err,user){
         if(err){console.log("Error in finding user in sign up page" , err); return;}
 
+        
         // if user  exist
         if(user){
             return res.redirect('/users/sign-in');
@@ -57,5 +58,5 @@ module.exports.create_user = function(req,res){
 // create new session when user sign in
 module.exports.create_session = function(req,res){
     // after authentication by passport in route , redirects to home page
-    return res.redirect('/');
+    return res.redirect("/");
 }
