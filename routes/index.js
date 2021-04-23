@@ -6,7 +6,6 @@ const home_controller = require('../controllers/home_controller');
 
 //  routes for home page & controller
 router.get('/' , home_controller.home);
-router.get('/auth' , home_controller.auth);
 
 // any other route , refer to its route page
 router.use('/users' , require('./users'));

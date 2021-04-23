@@ -1,7 +1,8 @@
+// const { user } = require('../config/mongoose');
 const User = require('../models/user');
 
 
-// all actions for users view
+// ---------------------------------------------all actions for users model
 
 module.exports.profile = function(req,res){
     return res.render('profile' , {
@@ -9,21 +10,28 @@ module.exports.profile = function(req,res){
     })
 }
 
-module.exports.name = function(req,res){
-    return res.render('users' , {
-        title : 'Name'
-    })
-}
-
 //  get sign In page
 module.exports.sign_in = function(req,res){
+    if( req.isAuthenticated() ){
+        return res.redirect('/users/profile');
+    }   
     return res.render('sign_in', {title : "Sign In"});
 }
 
 // get sign Up page
 module.exports.sign_up = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('sign_up' , {title : "Sign Up"});
 }
+
+module.exports.sign_out = function(req,res){
+    // function in passport, session is being destroyed here 
+    req.logout();
+    return res.redirect('/');
+}
+
 
 // create new user
 module.exports.create_user = function(req,res){
@@ -54,9 +62,8 @@ module.exports.create_user = function(req,res){
 
 }
 
-
 // create new session when user sign in
 module.exports.create_session = function(req,res){
     // after authentication by passport in route , redirects to home page
-    return res.redirect("/");
+    return res.redirect('/');
 }
