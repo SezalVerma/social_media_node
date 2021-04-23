@@ -12,6 +12,8 @@
         </title>
         <!-- css file -->
         <link rel="stylesheet" type="text/css" href="/css/layout.css">
+        <link rel="stylesheet" type="text/css" href="/css/header.css">
+        <link rel="stylesheet" type="text/css" href="/css/footer.css">
 
         <!-- place style file for body here -->
         <%- style %>
@@ -21,7 +23,10 @@
         <%- include('_header'); %>
 
         <!-- variable part from other views -->
-        <%- body %>
+        <main id="layout-main">
+            <%- body %>
+        </main>
+        
 
         <!-- footer partial -->
         <%- include('_footer'); %>

@@ -6,6 +6,8 @@ const passportLocal = require('./config/passport-local-strategy');
 const session = require('express-session'); 
 // to store cookie/session info in db
 const MongoStore = require('connect-mongodb-session')(session);
+// to convert scss to css
+const sassMiddleware = require('node-sass-middleware');
 
 const port = 8000;
 const app = express();
@@ -20,6 +22,20 @@ app.use(express_layouts);
 // extract script & style from sub pages & render in specific part in layout
 app.set('layout extractStyles' , true);
 app.set('layout extractScripts' , true);
+
+// use sass middleware , when a particaular route is asked for in browser, its scss gets converted to scss at that time 
+app.use(sassMiddleware({
+   // take scss files from source
+   src : './assets/scss',
+   // convert & put css files in destination
+   dest : './assets/css',
+   // show error while converting files (app in development mode)
+   debug : true,
+   // show converted css  in multiple lines (expanded)
+   outputStyle : 'expanded',
+   // css files are in which folder (<link href="/prefix/home.css">)
+   prefix : '/css'
+}))
 
 // refer static files for views in "assets" folder
 app.use(express.static('./assets'));
