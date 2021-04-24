@@ -1,0 +1,35 @@
+#header {
+  // height: 10%;
+  background-color: rgb(83, 96, 114);
+  color: white;
+
+  #header-nav {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    #header-name {
+      display: inline-block;
+      margin: 0;
+    }
+
+    #header-links {
+      display: inline-block;
+      padding: 0.5 rem;
+
+      ul {
+        li {
+          display: inline-block;
+          a {
+            text-decoration: none;
+            color: white;
+            padding: 0.5rem;
+            font-size: large;
+          }
+        }
+      }
+    }
+  }
+}
