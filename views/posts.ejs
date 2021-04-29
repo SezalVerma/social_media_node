@@ -1,3 +1,11 @@
 <link rel="stylesheet" type="text/css" href="/css/posts.css">
 
 <h1><%= title%> Rendered</h1>
+
+<section id="feed-posts">
+    <h2> Post </h2>
+    <form id="create-post" action="/posts/create" method="post">
+        <textarea placeholder="Type Content Here" name="content" rows="4" cols="40" required>
+        <button type="submit"> Post </button>
+    </form>
+</section>

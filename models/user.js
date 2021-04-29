@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     }
+}, {
+    // keep info of created at & modified at
+    timestamps : true
 })
 
 const User = mongoose.model('User' , userSchema);

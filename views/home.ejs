@@ -3,3 +3,79 @@
 <link rel="stylesheet" type="text/css" href="/css/home.css">
 
 <h1> <%= title %> Rendered </h1>
+
+<section id="feed-posts">
+
+    <h2> Post </h2>
+
+    <div id="post-form">
+            <!-- locals.user work , only user wont . It shows the form only if a  user is signed in -->
+            <% if(locals.user){ %>
+                <form id="create-post" action="/posts/create" method="post">
+                   <textarea name="content" rows="10" cols="50"  placeholder="Type Content Here" required> </textarea> <br>
+                   <button type="submit"> Post </button>
+                </form>
+            <% } %>
+    </div>
+        
+       
+    <div id="all-posts">
+        <ul>
+            <% for(let post of posts) { %>
+                <li>
+                    <div >
+                        <p> <%= post.content %> </p>
+                        <p> Created By : <%= post.user.name %> , Created At : <%= post.createdAt %></p>
+                        <% if( locals.user && post.user.id == locals.user.id){ %> 
+                            <small> 
+                                <a href="/posts/delete/<%= post.id %>">
+                                     <i class="fas fa-trash"></i>
+                                     <!-- <i class="fas fa-trash" aria-hidden="true"></i> -->
+                                </a>
+                            </small>
+                            
+                        <% } %>
+                        <!-- <%  if(post.createdAt != post.updatedAt ) { %>
+                            <p> Last Updated At : <%= post.updatedAt %> </p>
+                        <% } %>  -->
+                        <div class="comment-form">
+                            <% if(locals.user) { %>
+                                <form action="/comments/create" method="post">
+                                    <textarea placeholder="Add Comment" name="content" required></textarea>
+                                    <input type="hidden" value="<%= post.id %>" name="post">
+                                    <button type="submit" > Add </button>
+                                </form>
+                            <% } %>
+                        </div>
+                        <div class="all-comments" id="post-comments-<%=post._id%>">
+                            <ul>
+                                <% for (let comment of post.comments)  { %>
+                                    <li >
+                                        <div>
+                                            <p> <%= comment.content %> </p>
+                                            <small> <%= comment.user.name %></small>
+                                            <% if(locals.user) { %> 
+                                                <% if (locals.user.id == comment.user.id || locals.user.id == post.user.id) { %>
+                                                <small>
+                                                    <a href="/comments/delete/?commentId=<%= comment.id %>&&postUser=<%= post.user.id%>">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </small>
+                                                <% } %>
+                                            <% } %>
+                                        </div>
+                                    </li>   
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+            <% } %>
+        </ul>
+    </div>
+   
+
+</section>
+
+
