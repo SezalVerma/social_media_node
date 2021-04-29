@@ -1,0 +1,35 @@
+<li>
+    <div >
+        <p> <%= post.content %> </p>
+        <p> Created By : <%= post.user.name %> , Created At : <%= post.createdAt %></p>
+        <% if( locals.user && post.user.id == locals.user.id){ %> 
+            <small> 
+                <a href="/posts/delete/<%= post.id %>">
+                     <i class="fas fa-trash"></i>
+                     <!-- <i class="fas fa-trash" aria-hidden="true"></i> -->
+                </a>
+            </small>
+            
+        <% } %>
+        <!-- <%  if(post.createdAt != post.updatedAt ) { %>
+            <p> Last Updated At : <%= post.updatedAt %> </p>
+        <% } %>  -->
+        <div class="comment-form">
+            <% if(locals.user) { %>
+                <form action="/comments/create" method="post">
+                    <textarea placeholder="Add Comment" name="content" required></textarea>
+                    <input type="hidden" value="<%= post.id %>" name="post">
+                    <button type="submit" > Add </button>
+                </form>
+            <% } %>
+        </div>
+        <div class="all-comments" id="post-comments-<%=post._id%>">
+            <ul>
+                <% for (let comment of post.comments)  { %>
+                   <!-- name of file , additional info or objects needed -->
+                   <%- include('_comments' , {comment : comment}) %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</li>
