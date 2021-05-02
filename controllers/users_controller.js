@@ -5,9 +5,25 @@ const User = require('../models/user');
 // ---------------------------------------------all actions for users model
 
 module.exports.profile = function(req,res){
-    return res.render('profile' , {
-        title : 'User Profile'
-    })
+    User.findById(req.params.id , function(err , user){
+        return res.render('profile' , {
+            title : 'User Profile',
+            user_profile : user
+        })
+    })   
+}
+
+module.exports.profile_update = function(req,res){
+    if( req.user.id== req.params.id && req.user.password == req.body.password){
+        User.findByIdAndUpdate(req.user.id , req.body , function(err,user){
+            console.log("Updated");
+            return res.redirect('back');
+        })
+    }
+    else{
+        res.status(401).send('Unauthorized');
+        // return res.redirect('back');
+    }
 }
 
 //  get sign In page
@@ -27,11 +43,12 @@ module.exports.sign_up = function(req,res){
 }
 
 module.exports.sign_out = function(req,res){
+    // this flash is passed to res in middleware & displayed on page redirected to
+    req.flash('success', "Logged out");
     // function in passport, session is being destroyed here 
     req.logout();
     return res.redirect('/');
 }
-
 
 // create new user
 module.exports.create_user = function(req,res){
@@ -64,6 +81,7 @@ module.exports.create_user = function(req,res){
 
 // create new session when user sign in
 module.exports.create_session = function(req,res){
+    req.flash('success', "Logged In successfully !!");
     // after authentication by passport in route , redirects to home page
     return res.redirect('/');
 }

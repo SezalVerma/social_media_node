@@ -2,5 +2,20 @@
 
 <h1><%= title%> Rendered</h1>
 
-<p> <%= user.name %> </p>
-<p> <%= user.email %> </p>
+
+
+<% if( user_profile.id == user.id){ %>
+    <!-- if user opens his own profile , can update info -->
+    <form action="/users/profile-update/<%= user_profile.id %>" method="POST">
+        <input type="email" value="<%= user.email %>" name="email" placeholder="<%= user.email %>" required>
+        <input type ="text" value="<%= user.name %>" name="name" placeholder="<%= user.name%>" required>
+        <input type="password" name="password" placeholder="Existing Password" required>
+        <button type="submit"> UPDATE </button>
+    </form>
+
+
+<% } else { %>
+    <!-- if user opens others profile -->
+    <p> <%= user_profile.name %> </p>
+    <p> <%= user_profile.email %> </p>
+<% } %>

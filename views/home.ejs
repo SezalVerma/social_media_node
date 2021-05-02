@@ -31,4 +31,20 @@
 
 </section>
 
+<section id="friends">
+    <div>
+        <h1> Friends </h1>
+        <div>
+            <ul>
+                <% for( let user of all_users){ %>
+                   <li>
+                       <a href="/users/profile/<%= user.id %>"> <%= user.name %> </a>
+                   </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    
+</section>
 

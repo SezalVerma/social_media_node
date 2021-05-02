@@ -8,6 +8,10 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 // to convert scss to css
 const sassMiddleware = require('node-sass-middleware');
+// to flash notification on events
+const flash = require('connect-flash');
+// our own middleware
+const middleware = require('./config/middleware');
 
 const port = 8000;
 const app = express();
@@ -77,6 +81,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
+// flash after session as it uses session cookies
+app.use(flash());
+// uses flash
+app.use(middleware.setFlash);
 
 // for any url ,use routes from 
 app.use('/' , require('./routes/index'));
