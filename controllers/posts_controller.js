@@ -7,9 +7,10 @@ module.exports.create = function(req,res){
  
     Post.create( {content : req.body.content , user : req.user._id} , function(err,post){
         if(err){
-            console.log("Error while creating new post", err);
-            return;
+            req.flash("error", err);
+            return res.redirect('/');
         }
+        req.flash("success","Post published");
         return res.redirect('/');
     });
 };
@@ -24,13 +25,14 @@ module.exports.delete =  async function(req,res){
             post.remove();
 
             await Comment.deleteMany({post : req.params.id});
+            req.flash("success", "Post deleted");
         }   
         return res.redirect('back');
 
     }
     catch(err){
-        console.log("Error while deleting a post", err);
-        return;
+        req.flash("error", err);
+        return res.redirect('back');
     }    
 };
 

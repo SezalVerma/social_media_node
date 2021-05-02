@@ -9,22 +9,23 @@ const User = require('../models/user');
 
 // ****** refer passport-local.js******
 
-// authenticate user by email & password
+// passport.authenticate() uses this function & authenticate user by email & password
 passport.use(new LocalStrategy({
     // usernameField -- unique field , setting usernameField to take email 
-    usernameField: 'email'
+    usernameField: 'email',
+    passReqToCallback : true
 },
-    function (email, password, done) {
+    function (req,email, password, done) {
         // find a user and establish the identity
         User.findOne({ email: email }, function (err, user) {
             if (err) {
-                console.log("error while finding user --> Passport-local", err);
+                req.flash("error", err);
                 return done(err);
             }
             // ****done takes 2 args(err, any info to send/auth failed)
 
             if (!user || user.password != password) {
-                console.log("Either email or password entered isn't correct");
+                req.flash("error" , "Invalid Username/Password ");
                 // err- null & authentication- failed
                 return done(null, false);
             }
@@ -68,7 +69,7 @@ passport.checkAuthentication = function (req, res, next) {
 
 //  to set user from cookies
 passport.setAuthenticatedUser = function (req, res, next) {
-    // if user signed in
+    // if user signed in 
     if (req.isAuthenticated()) {
         // req.user contains current user info from cookie session
         res.locals.user = req.user;

@@ -16,12 +16,13 @@ module.exports.create =  async function (req, res) {
             post.comments.push(comment._id);
             // save changes to db , after every update (without this changes are still in memory only )
             post.save();
+            req.flash("success", "Comment added");
         };
         return res.redirect('/');
     } 
     catch (err) {
-        console.log("Error while creating comment", err);
-        return;
+        req.flash("error", err);
+        return res.redirect('/');
     }
 };
 
@@ -34,12 +35,13 @@ module.exports.delete = async function (req, res) {
             comment.remove();
 
             // remove  from comments array in post , a comment with some id
-            await Post.findByIdAndUpdate(postId, {$pull: { comments: req.query.commentId }} );         
+            await Post.findByIdAndUpdate(postId, {$pull: { comments: req.query.commentId }} );    
+            req.flash("success", "Comment deleted");     
         };
         return res.redirect('back');
     }
     catch(err){
-        console.log("Error while deleting comment", err);
-        return;
+        req.flash("error",err);
+        return res.redirect("back");
     }
 };

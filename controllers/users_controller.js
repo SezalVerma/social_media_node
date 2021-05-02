@@ -16,15 +16,19 @@ module.exports.profile = function(req,res){
 module.exports.profile_update = function(req,res){
     if( req.user.id== req.params.id && req.user.password == req.body.password){
         User.findByIdAndUpdate(req.user.id , req.body , function(err,user){
-            console.log("Updated");
-            return res.redirect('back');
+            if(user){
+                req.flash("success", "Profile Updated");        
+            }          
+            return res.redirect('back'); 
         })
     }
     else{
-        res.status(401).send('Unauthorized');
-        // return res.redirect('back');
+        req.flash("error", "You can't update this");
+        // status -> takes to another empty page
+        // res.status(401).send('Unauthorized');        
+        return res.redirect('back');
     }
-}
+}   
 
 //  get sign In page
 module.exports.sign_in = function(req,res){
@@ -55,23 +59,25 @@ module.exports.create_user = function(req,res){
     
     //  if both passwords doesn't match
     if(req.body.password != req.body.confirm_password){
+        req.flash("error", "Passwords doesn't match ");
         return res.redirect('back');
     }
 
     // check if user already exist
     User.findOne({email : req.body.email} , function(err,user){
-        if(err){console.log("Error in finding user in sign up page" , err); return;}
+        if(err){ req.flash("error" , err); return;}
 
         
         // if user  exist
         if(user){
+            req.flash("error" , "User already exists ");
             return res.redirect('/users/sign-in');
         }
         // if not , create new
         else{
             User.create(req.body , function(err, user){
-                if(err){console.log("Error while creating new user" , err); return;}
-                console.log("new user created");
+                if(err){console.log("error" , err); return;}
+                req.flash("success", "Profile created");
                 return res.redirect('/users/sign-in');
             })
         }
